@@ -9,20 +9,21 @@
     console.groupEnd();
     
     // Display the track name
-    // var trackName = $('<h3><a href="' + data.external_urls.spotify + '"target="_blank">' + data.name + '</a></h3>');
+    
     //var trackName = $(
     //`<h3><a href="${data.external_urls.spotify}">${data.name}</a></h3>`
     //);  
-    //trackName.appendTo('#search-track-container');
-    
     let h3 = document.createElement('h3');
     let link = document.createElement('a');
     link.innerText = data.name;
     link.setAttribute('href', data.external_urls.spotify);
     h3.append(link);
+    //trackName.appendTo('#search-track-container');
     document.getElementById('search-track-container').append(h3);
     
+    
     //Display the track artist
+    
     var artists = '';
     data.artists.forEach(function(element){
       artists = artists + element.name + ' ';
@@ -31,6 +32,7 @@
     //var artistName = $('<h3>' + artists + '</h3>');
     let h4 = document.createElement('h4');
     h4.innerText = artists;
+    //artistName.appendTo('#search-track-container');
     document.getElementById('search-track-container').append(h4);
     
     
