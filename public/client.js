@@ -1,9 +1,9 @@
 // client-side js
 // run by the browser each time your view template is loaded
 
- document.addEventListener("Content loaded", function(){
+$(function() {
     
-  fetch('/search-track').then(resp => resp.json()).then((data) => {
+  $.get('/search-track', function(data) {
     // "Data" is the object we get from the API. See server.js for the function that returns it.
     console.group('%cResponse from /search-track', 'color: #F037A5; font-size: large');
     console.log(data);
@@ -11,20 +11,13 @@
     
     // Display the track name
     // var trackName = $('<h3><a href="' + data.external_urls.spotify + '"target="_blank">' + data.name + '</a></h3>');
-    //var trackName = $(
-    //`<h3><a href="${data.external_urls.spotify}">${data.name}</a></h3>`
-    //);  
-    //trackName.appendTo('#search-track-container');
+    var trackName = $(
+    `<h3><a href="${data.external_urls.spotify}">${data.name}</a></h3>`
+    );  
+    trackName.appendTo('#search-track-container');
     
     
-    
-    let h3 = document.createElement('h3');
-    let link = document.createElement('a');
-    link.innerHTML = data.name;
-    link.setAttribute('href', data.external_urls.spotify);
-    h3.append(link);
-    document.getElementById('search-track-container').append(h3);
-    
+    // data.external_urls.spotify
     
     //Display the track artist
     var artists = '';
@@ -34,10 +27,6 @@
     
     var artistName = $('<h3>' + artists + '</h3>');
     artistName.appendTo('#search-track-container');
-    
-    let h4 = document.createElement('h4');
-    h4.innerHTML = artists;
-    document.getElementByID('search-track-container')
     
     // Display the album art
     var img = $('<img/>');
