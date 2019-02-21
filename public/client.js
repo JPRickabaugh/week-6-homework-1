@@ -13,8 +13,8 @@
     //var trackName = $(
     //`<h3><a href="${data.external_urls.spotify}">${data.name}</a></h3>`
     //);  
-    let h3 = document.createElement('h3');
-    let link = document.createElement('a');
+    var h3 = document.createElement('h3');
+    var link = document.createElement('a');
     link.innerText = data.name;
     link.setAttribute('href', data.external_urls.spotify);
     h3.append(link);
@@ -30,7 +30,7 @@
     });
     
     //var artistName = $('<h3>' + artists + '</h3>');
-    let h4 = document.createElement('h4');
+    var h4 = document.createElement('h4');
     h4.innerText = artists;
     //artistName.appendTo('#search-track-container');
     document.getElementById('search-track-container').append(h4);
@@ -39,7 +39,7 @@
     // Display the album art
     
     //var img = $('<img/>');
-    let img = document.createElement('img');
+    var img = document.createElement('img');
     //img.attr('src', data.album.images[0].url);
     img.setAttribute('src', data.album.images[0].url);
     //img.appendTo('#search-track-container');
