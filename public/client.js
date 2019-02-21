@@ -105,9 +105,12 @@
     console.groupEnd();
         
     // Display the artist's image
-    var img = $('<img class="circle-image" />');
-    img.attr('src', data.images[0].url);
-    img.appendTo('#artist-container');
+    //var img = $('<img class="circle-image" />');
+    let img = document.createElement('img');
+    //img.attr('src', data.images[0].url);
+    img.setAttribute('src', data.images[0].url);
+    //img.appendTo('#artist-container');
+    document.getElementById('#artist-container').append(img);
     
     // Display the artist name
     var trackName = $('<h3>' + data.name + '</h3>');
