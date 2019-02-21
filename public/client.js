@@ -1,7 +1,6 @@
 // client-side js
 // run by the browser each time your view template is loaded
-
-$(function() {
+ document.addEventListener("DOM Loaded", function(){
     
   $.get('/search-track', function(data) {
     // "Data" is the object we get from the API. See server.js for the function that returns it.
@@ -11,13 +10,17 @@ $(function() {
     
     // Display the track name
     // var trackName = $('<h3><a href="' + data.external_urls.spotify + '"target="_blank">' + data.name + '</a></h3>');
-    var trackName = $(
-    `<h3><a href="${data.external_urls.spotify}">${data.name}</a></h3>`
-    );  
-    trackName.appendTo('#search-track-container');
+    //var trackName = $(
+    //`<h3><a href="${data.external_urls.spotify}">${data.name}</a></h3>`
+    //);  
+    //trackName.appendTo('#search-track-container');
     
-    
-    // data.external_urls.spotify
+    let h3 = document.createElement('h3');
+    let link = document.createElement('a');
+    link.innerText = data.name;
+    link.setAttribute('href', data.external_urls.spotify);
+    h3.append(link);
+    document.getElementById('search-track-container').append(h3);
     
     //Display the track artist
     var artists = '';
@@ -25,13 +28,21 @@ $(function() {
       artists = artists + element.name + ' ';
     });
     
-    var artistName = $('<h3>' + artists + '</h3>');
-    artistName.appendTo('#search-track-container');
+    //var artistName = $('<h3>' + artists + '</h3>');
+    let h4 = document.createElement('h4');
+    h4.innerText = artists;
+    document.getElementById('search-track-container').append(h4);
+    
     
     // Display the album art
-    var img = $('<img/>');
-    img.attr('src', data.album.images[0].url);
-    img.appendTo('#search-track-container');
+    
+    //var img = $('<img/>');
+    let img = document.createElement('img');
+    //img.attr('src', data.album.images[0].url);
+    img.setAttribute('src', data.album.images[0].url);
+    //img.appendTo('#search-track-container');
+    document.getElementById('search-track-container').append(img);
+    
   });
   
   
