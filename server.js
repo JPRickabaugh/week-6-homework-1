@@ -49,7 +49,7 @@ spotifyApi.clientCredentialsGrant()
 app.get('/search-track', function (request, response) {
   
   // Search for a track!
-  spotifyApi.searchTracks('track:proud of u', {limit: 1})
+  spotifyApi.searchTracks('track: Proud of U', {limit: 1})
     .then(function(data) {
     
       // Send the first (only) track object
@@ -62,8 +62,12 @@ app.get('/search-track', function (request, response) {
 
 app.get('/category-playlists', function (request, response) {
   
-  // Make an initial list of countries
-  let countries = [
+  // Get playlists from a browse category
+  // Find out which categories are available here: https://beta.developer.spotify.com/console/get-browse-categories/
+  //country name like "sweden"
+  //country code like "SE"
+  //let countries = ["Sweden", "France"];
+  /*let countries = [
     {
       name: "Sweden",
       code: "SE"
@@ -73,42 +77,53 @@ app.get('/category-playlists', function (request, response) {
       code: "FR"
     },
   ];
-  
-  
-  // Get the playlists for the given category for each country
+
   countries.forEach((c) => {
     spotifyApi.getPlaylistsForCategory(
-      'jazz', 
+      'metal',
       { country: c.code, limit : 10 }
     )
       .then((data) => {
-        // Persist the data on this country object
         c.data = data.body;
     }, function(err) {
       console.error(err);
     });
   });
   
-  // Check will see if we have .data on all the country objects
-  // which indicates all requests have returned successfully.
-  // If the lengths don't match then we call check again in 500ms
-  let check = () => {
-    if (countries.filter(c => c.data !== undefined).length 
-    !== countries.length) {
-      setTimeout(check, 500);
-    } else {
-      response.send(countries);
-    }
-  }
+ 
   
-  // Call check so we don't send a response until we have all the data back
-  check();
+  while (
+    countries.filter(c => c.data !== undefined).length 
+    !== countries.length
+  ) {
+
+  }
+    
+  response.send (countries); 
+}); */
+  // Get playlists from a browse category
+  // Find out which categories are available here: https://beta.developer.spotify.com/console/get-browse-categories/
+  spotifyApi.getPlaylistsForCategory('metal', { limit : 10 })
+    .then(function(data) {
+    
+    // Send the list of playlists
+    response.send(data.body.playlists);
+    
+    
+    }, function(err) {
+    console.error(err);
+  });
+    
 });
+
+//couldn't figure out how to get different country's playlists
+
 
 app.get('/audio-features', function (request, response) {
   
   // Get the audio features for a track ID
-  spotifyApi.getAudioFeaturesForTrack('4uLU6hMCjMI75M1A2tKUQC')
+  //spotifyApi.getAudioFeaturesForTrack('4uLU6hMCjMI75M1A2tKUQC') //this is the ID for "Never Gonna Give You Up" by Rick Astley. Sneaky.
+  spotifyApi.getAudioFeaturesForTrack('1vcxF91pWs9uNwDROuiCPB') //This is the ID for a new song: "Savior" by Rise Against
     .then(function(data) {
     
       //Send the audio features object
@@ -119,10 +134,13 @@ app.get('/audio-features', function (request, response) {
     });
 });
 
+
+
 app.get('/artist', function (request, response) {
   
   // Get information about an artist
-  spotifyApi.getArtist('6jJ0s89eD6GaHleKKya26X')
+  //spotifyApi.getArtist('6jJ0s89eD6GaHleKKya26X') original artist
+  spotifyApi.getArtist('3Gs10XJ4S4OEFrMRqZJcic') //new artist for assignment, Plini
     .then(function(data) {
     
       // Send the list of tracks
@@ -133,10 +151,13 @@ app.get('/artist', function (request, response) {
     });
 });
 
+
+
 app.get('/artist-top-tracks', function (request, response) {
   
   // Get an artist's top tracks in a country
-  spotifyApi.getArtistTopTracks('0LcJLqbBmaGUft1e9Mm8HV', 'SE')
+  // spotifyApi.getArtistTopTracks('0LcJLqbBmaGUft1e9Mm8HV', 'SE') //this is the artist ID for ABBA
+  spotifyApi.getArtistTopTracks('3Gs10XJ4S4OEFrMRqZJcic', 'SE') //New artist top 10: Plini. Couldn't figure out the country part for this either
     .then(function(data) {
     
       // Send the list of tracks
